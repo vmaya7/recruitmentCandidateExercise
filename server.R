@@ -1,111 +1,114 @@
-## server.R
+#--------------------------------
+#
+#         server.R
+#
+#--------------------------------
+
+#The server.R file contains the logic behind of ui.R.
 
 
+#--------------------------------------------------.----------------------------
+# Initializing values
 
-source('data_preprocessing.R')
-source('functions.R')
+source('data_preprocessing.R') # Do the prepocesing
+source('functions.R') # Get helper functions 
 library(shiny)
 library(shinydashboard)
 
 Retention_Factor <- 0.8
-###################################################################################################################################3
-###### SERVER
+
+#-------------------------------------------------------------------------------
+# Server function
 server <- function(input, output) { 
-  ##############################################################################
-  #primera pestaña
+
+#------------------------------------------
+# Reactive functions
   
+  #Generate the data
   
-  newData <- reactive({ 
+  newData <- reactive({  # Update the dataframe with fitted values.
     
     data$Media_Adstock <- Adstock(data$Media_Spend_USD, input$slider)
-    lineal_model <- lm(data$Search_Volume ~ data$Media_Campaign + data$Media_Adstock)
+    
+    lineal_model <- 
+      lm(data$Search_Volume ~ data$Media_Campaign + data$Media_Adstock)
+    
     lineal_model_fitted <- lineal_model$fitted.values
     data$fitted_values <- lineal_model_fitted
+    
     return(data)
     
 
   }) 
   
+  #Return the dataframe "data" uploaded
   output$plot<-renderPlot({
     linear_graph(newData())
   })
     
+#-------------------------------------------------------------------------------
+# Get Efficiencies of the campagins
   
-
-
-#data$Media_Adstock <- Adstock(data$Media_Spend_USD, Retention_Factor)
-#
-##----------------------------------------
-## Creating a linear model 
-#
-#lineal_model <- lm(data$Search_Volume ~ data$Media_Campaign + data$Media_Adstock)
-#
-#
-#lineal_model_fitted <- lineal_model$fitted.values
-#
-#data$fitted_values <- lineal_model_fitted
-#
-##----------------------------------------
-#
-##----------------------------------------
-## Get eficiencias
-#
-## Campaign
-campaign1 <- Retention_Factor
-campaign2 <- Retention_Factor
-campaign3 <- Retention_Factor
-
-#-----------------------------------------
+#---------------------------------------
+# Reactive functions
+  
 #Campaing1
-Campaing1_f <- reactive({ 
   
-  data$Media_Adstock <- Adstock(data$Media_Spend_USD, input$slider)
-  lineal_model <- lm(data$Search_Volume ~ data$Media_Campaign + data$Media_Adstock)
-  campaign1 <- as.numeric(lineal_model$coefficients[1] + lineal_model$coefficients[4])
-  return(round(campaign1, 2))
-})
-
+  Campaing1_f <- reactive({ 
+    
+    data$Media_Adstock <- Adstock(data$Media_Spend_USD, input$slider)
+    
+    lineal_model <- 
+      lm(data$Search_Volume ~ data$Media_Campaign + data$Media_Adstock)
+    
+    campaign1 <- 
+      as.numeric(lineal_model$coefficients[1] + lineal_model$coefficients[4])
+    
+    return(round(campaign1, 2))
+  })
+  
 #----------------------------------------
 #Campaing2
-Campaing2_f <- reactive({ 
   
-  data$Media_Adstock <- Adstock(data$Media_Spend_USD, input$slider)
-  lineal_model <- lm(data$Search_Volume ~ data$Media_Campaign + data$Media_Adstock)
-  campaign2 <- as.numeric(lineal_model$coefficients[1] + lineal_model$coefficients[2] +lineal_model$coefficients[4])
-  return(round(campaign2, 2))
-})
-
+  Campaing2_f <- reactive({ 
+    
+    data$Media_Adstock <- 
+      Adstock(data$Media_Spend_USD, input$slider)
+    
+    lineal_model <- 
+      lm(data$Search_Volume ~ data$Media_Campaign + data$Media_Adstock)
+    
+    campaign2 <- 
+      as.numeric(lineal_model$coefficients[1] + 
+                   lineal_model$coefficients[2] +lineal_model$coefficients[4])
+    
+    return(round(campaign2, 2))
+  })
+  
 #----------------------------------------
-#Campaing1
-Campaing3_f <- reactive({ 
+#Campaing3
   
-  data$Media_Adstock <- Adstock(data$Media_Spend_USD, input$slider)
-  lineal_model <- lm(data$Search_Volume ~ data$Media_Campaign + data$Media_Adstock)
-  campaign3 <- as.numeric(lineal_model$coefficients[1] + lineal_model$coefficients[3] +lineal_model$coefficients[4])
-  return(round(campaign3, 2))
-})
+  Campaing3_f <- reactive({ 
+    
+    data$Media_Adstock <- 
+      Adstock(data$Media_Spend_USD, input$slider)
+    
+    lineal_model <- 
+      lm(data$Search_Volume ~ data$Media_Campaign + data$Media_Adstock)
+    
+    campaign3 <- as.numeric(lineal_model$coefficients[1] + 
+                              lineal_model$coefficients[3] +
+                              lineal_model$coefficients[4])
+    
+    return(round(campaign3, 2))
+  })
 
-#----------------------------------------
-#
-#campaign2 <- as.numeric(lineal_model$coefficients[1] + lineal_model$coefficients[2] +lineal_model$coefficients[4])
-#
-#campaign3 <- as.numeric(lineal_model$coefficients[1] + lineal_model$coefficients[3] +lineal_model$coefficients[4])
-#  
-#g_fitted <- ggplot (data, aes(x = Date_Week))
-#g_fitted + 
-#  geom_line(aes(y = Search_Volume, color = 'Real values'),alpha = 0.4, 
-#            linetype = 'twodash',size = 1.1) +
-#  geom_line(aes(y = fitted_values, color = 'Fitted Values' ), size = 1.5) +
-#  labs(x = 'Date (week)', y = 'Search Volume', 
-#       title = "Fitted values vs real values",
-#       subtitle = 'Linear Regression aproach')+
-#  theme(plot.title = element_text(size = 15, face = "bold")) +
-#  scale_color_discrete("Values:")  
-  
-  
-  #-----------------------cajas
 
-  #------------------------------------------------
+
+
+#-------------------------------------------------------------------------------
+# Render Efficiencies boxes
+
   
   output$value1 <- renderValueBox({
     valueBox(
@@ -128,11 +131,6 @@ output$value2 <- renderValueBox({
     
   })
   
-  #------------------------------------
-  
 
-
-  
-  
-  
-}
+} # End server function
+#-------------------------------------------------------------------------------

@@ -1,4 +1,15 @@
+#--------------------------------
+#
+#         data_preprocessing.R
+#
+#--------------------------------
+#The preprocessing.R file contains the necessary lines of code 
+#to obtain a DataFrame ready to be analyzed using the linear regression model.
+
+#-------------------------------------------------------------------------------
+
 rm(list = ls()) # Clean the WorkSpace
+
 #-----------------------------------------
 #                 Libraries              -
 #-----------------------------------------
@@ -8,6 +19,7 @@ library(lubridate)
 library(tidyverse)
 library(data.table)
 library(fastDummies)
+library(stats)
 
 #----------------------------------------
 # Preprocessing DataFrame               -
@@ -32,5 +44,5 @@ data$Media_Campaign <- data$Media_Campaign %>% as.factor()
   
 #----------------------------------------
 #Creating fitted graph
-theme_set(theme_bw(base_size = 14, base_family = "Roboto Condensed")) #theme set
+theme_set(theme_bw(base_size = 14))#theme set
 
