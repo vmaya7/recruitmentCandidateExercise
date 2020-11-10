@@ -1,3 +1,24 @@
+# Influence of advertising investment on levels weekly Google search
+
+-----
+
+In order to gain an understanding of which of the campaigns appear to have more effectively generated additional Search volumes, a linear model was proposed, using the Adstock transformation. <br> <br>
+The Adstock transformation can be defined as:
+<br> <br>
+$Adstock(n) = Media Spend (n) + [ RF \cdot Adstock(n-1)]$
+<br>
+
+Where The RF is the Retention Factor [0,1] describing the proportion of the media pressure the is carried over from week to week.
+<br>
+
+At the same time Shiny dashboard was used with a sliderbar that controls the RF.
+The efficiency was calculated using the coefficients of the linear regression model.
+
+<br>
+
+-----
+<br>
+
 # Recruitment Candidate Exercise
 Exercise for Solutions Analytics Director role
 
