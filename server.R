@@ -1,18 +1,48 @@
 ## server.R
 
 library(shiny)
+library(shinydashboard)
+###################################################################################################################################3
+###### SERVER
+server <- function(input, output) { 
+  ##############################################################################
+  #primera pestaña
+  #-----------------------cajas
 
-shinyServer(function(input, output) {
+  #------------------------------------------------
   
-  output$distPlot <- renderPlot({
-    
-    # generate bins based on input$bins from ui.R
-    x    <- faithful[, 2]
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white')
+  output$value1 <- renderValueBox({
+    valueBox(
+      formatC(100,10, format = "d", big.mark = ','), "Total de views",icon = icon("chart-line")
+      ,color = "green")
     
   })
   
-})
+  output$value2 <- renderValueBox({
+    valueBox(
+      formatC(100,10, format = "d", big.mark = ','), "Total de views",icon = icon("chart-line")
+      ,color = "green")
+    
+  })
+  
+  output$value3 <- renderValueBox({
+    valueBox(
+      formatC(100,10, format = "d", big.mark = ','), "Total de views",icon = icon("chart-line")
+      ,color = "green")
+    
+  })
+  
+  #------------------------------------
+  
+  
+  output$view <- NULL 
+#    DT::renderDataTable({
+#    top20
+#  })
+  
+  output$plot5top <- NULL
+
+  
+  
+  
+}
