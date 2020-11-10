@@ -9,7 +9,7 @@ ui <- dashboardPage(skin = "green",
                                   menuItem("summary", tabName = "pais", icon = icon("globe-africa"))
                                   
                       ),
-                      width = 250
+                      width = 270
                     ), # AQui se agregan más pestañas
                     #-------------------------------------------------------------
                     # Body  
@@ -24,7 +24,7 @@ ui <- dashboardPage(skin = "green",
                             ,valueBoxOutput("value3")
                           ), fluidRow(
                             box(title = "Retention Factor [0,1]", status = "primary", solidHeader = TRUE, sliderInput("slider", "Number of observations:",min =  0, max =  1, value = 0.8, step = 0.1), height = 500), 
-                            box(title = "Lista de éxitos global", status = "primary", solidHeader = TRUE, DT::dataTableOutput("view"),  height = 500)
+                            box(title = "Lista de éxitos global", status = "primary", solidHeader = TRUE, plotOutput("plot"),  height = 500)
                             )
                         )
                       )
